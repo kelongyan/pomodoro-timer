@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>番茄时钟 | Pomodoro Timer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <!-- 顶部控制按钮 -->
+  <div class="top-controls">
+    <!-- 主题切换按钮 -->
+    <button class="icon-btn" id="themeToggle" aria-label="切换主题">
+      <svg class="icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg class="icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+
+    <!-- 全屏按钮 -->
+    <button class="icon-btn" id="fullscreenToggle" aria-label="切换全屏">
+      <svg class="icon fullscreen-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+      </svg>
+      <svg class="icon fullscreen-exit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+      </svg>
+    </button>
+
+    <!-- 设置按钮 -->
+    <button class="icon-btn" id="settingsToggle" aria-label="打开设置">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path
+          d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+        </path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- 设置遮罩 -->
+  <div class="settings-overlay" id="settingsOverlay"></div>
+
+  <!-- 设置面板 -->
+  <div class="settings-panel" id="settingsPanel">
+    <div class="settings-header">
+      <h2 class="settings-title">设置</h2>
+      <button class="settings-close" id="settingsClose" aria-label="关闭设置">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="settings-content">
+      <div class="settings-group">
+        <label class="settings-label">专注时长</label>
+        <input type="number" class="settings-input" id="focusTime" min="1" max="60" value="25" />
+      </div>
+
+      <div class="settings-group">
+        <label class="settings-label">短休息</label>
+        <input type="number" class="settings-input" id="shortBreak" min="1" max="30" value="5" />
+      </div>
+
+      <div class="settings-group">
+        <label class="settings-label">长休息</label>
+        <input type="number" class="settings-input" id="longBreak" min="1" max="60" value="15" />
+      </div>
+
+      <div class="settings-group full-width">
+        <label class="settings-label">提示音</label>
+        <div class="sound-options">
+          <label class="sound-option">
+            <input type="radio" name="sound" value="chime" checked />
+            <span class="sound-icon">🔔</span>
+            <span class="sound-label">风铃</span>
+          </label>
+          <label class="sound-option">
+            <input type="radio" name="sound" value="bell" />
+            <span class="sound-icon">🛎️</span>
+            <span class="sound-label">铃声</span>
+          </label>
+          <label class="sound-option">
+            <input type="radio" name="sound" value="none" />
+            <span class="sound-icon">🔇</span>
+            <span class="sound-label">静音</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="shortcuts-hint">
+      <span class="shortcuts-icon">⌨️</span>
+      <span class="shortcuts-text">快捷键: 空格开始 · R重置 · S跳过 · F全屏</span>
+    </div>
+
+    <div class="settings-footer">
+      <button class="settings-reset-btn" id="resetSettingsBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <polyline points="1 4 1 10 7 10"></polyline>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+        恢复默认
+      </button>
+      <button class="theme-toggle-btn" id="themeToggleBtn">
+        <span class="theme-icon">🌙</span>
+        <span class="theme-text">切换主题</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 主卡片容器 -->
+  <main class="main-card">
+    <!-- 标题区域 -->
+    <header class="card-header">
+      <h1 class="main-title">沙漏瓶 - 深度工作</h1>
+      <p class="subtitle">专注时间，看着瓶子慢慢变空...</p>
+    </header>
+
+    <!-- 阶段切换标签 -->
+    <div class="mode-tabs" id="modeTabs">
+      <button class="mode-tab active" data-mode="focus" data-label="专注">
+        <span class="tab-icon">🎯</span>
+        <span class="tab-text">专注</span>
+      </button>
+      <button class="mode-tab" data-mode="break" data-label="短休息">
+        <span class="tab-icon">☕</span>
+        <span class="tab-text">短休息</span>
+      </button>
+      <button class="mode-tab" data-mode="long-break" data-label="长休息">
+        <span class="tab-icon">🌴</span>
+        <span class="tab-text">长休息</span>
+      </button>
+    </div>
+
+    <!-- 计时器区域 -->
+    <div class="timer-section">
+      <!-- 左侧：沙漏视觉 -->
+      <div class="hourglass-visual" id="timerRingContainer">
+        <div class="hourglass-container">
+          <div class="hourglass-fill" id="ringProgress"></div>
+          <div class="hourglass-markings">
+            <div class="marking"></div>
+            <div class="marking"></div>
+            <div class="marking"></div>
+          </div>
+        </div>
+        <!-- 沙漏底部装饰 -->
+        <div class="hourglass-base">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M12 2v20M2 12h20" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- 右侧：时间和控制 -->
+      <div class="timer-content">
+        <!-- 时间显示 -->
+        <div class="time-display" id="timeDisplay">25:00</div>
+
+        <!-- 进度条 -->
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="ringProgressBar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+
+        <!-- 番茄计数点（保留但隐藏，用于兼容） -->
+        <div class="pomodoro-count" id="pomodoroCount" style="display: none;">
+          <span class="pomodoro-dot"></span>
+          <span class="pomodoro-dot"></span>
+          <span class="pomodoro-dot"></span>
+          <span class="pomodoro-dot"></span>
+        </div>
+
+        <!-- 状态标签（保留但隐藏） -->
+        <div class="status-badge" id="statusBadge" style="display: none;">
+          <span class="status-dot"></span>
+          <span id="statusText">准备就绪</span>
+        </div>
+
+        <!-- 阶段标签（金沙） -->
+        <div class="phase-indicator">
+          <span class="phase-icon">⏳</span>
+          <span class="phase-label" id="phaseLabel">专注</span>
+        </div>
+
+        <!-- 控制按钮 -->
+        <div class="control-buttons">
+          <!-- 暂停按钮（红色） -->
+          <button class="control-btn pause-btn" id="pauseBtn" aria-label="暂停" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+              <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+            </svg>
+          </button>
+
+          <!-- 主按钮（开始/暂停切换） -->
+          <button class="control-btn main-btn" id="mainBtn" aria-label="开始">
+            <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span id="mainBtnText" style="display: none;">开始</span>
+          </button>
+
+          <!-- 切换/跳过按钮（紫色） -->
+          <button class="control-btn switch-btn" id="skipBtn" aria-label="跳过">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polygon points="5 4 15 12 5 20 5 4"></polygon>
+              <line x1="19" y1="5" x2="19" y2="19"></line>
+            </svg>
+          </button>
+
+          <!-- 重置按钮（灰色） -->
+          <button class="control-btn reset-btn" id="resetBtn" aria-label="重置">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- 统计信息（保留但隐藏） -->
+        <div class="stats" id="statsContainer" style="display: none;">
+          <div class="stat-item">
+            <span class="stat-value" id="todayCount">0</span>
+            <span class="stat-label">今日完成</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value" id="totalTime">0</span>
+            <span class="stat-label">专注分钟</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 保留兼容性元素 -->
+  <div id="timer" style="display: none;"></div>
+  <button id="startBtn" style="display: none;"></button>
+  <div id="settingsModal" style="display: none;"></div>
+  <div id="settingsBtn" style="display: none;"></div>
+
+  <!-- JavaScript 模块 -->
+  <script src="js/state.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/notification.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/index.js"></script>
+</body>
+
+</html>
