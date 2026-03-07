@@ -1,0 +1,230 @@
+/* ==================== 计时器区域 ==================== */
+.timer-section {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+/* 左侧：沙漏视觉 */
+.hourglass-visual {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hourglass-container {
+  width: 140px;
+  height: 200px;
+  background: linear-gradient(
+    180deg,
+    rgba(251, 191, 36, 0.2) 0%,
+    rgba(245, 158, 11, 0.3) 100%
+  );
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+  border: 2px solid rgba(251, 191, 36, 0.3);
+  box-shadow:
+    inset 0 0 30px rgba(251, 191, 36, 0.2),
+    0 4px 20px rgba(245, 158, 11, 0.15);
+  transition: all var(--transition-slow);
+}
+
+/* 沙漏阶段颜色 */
+.hourglass-visual.break .hourglass-container {
+  background: linear-gradient(
+    180deg,
+    rgba(16, 185, 129, 0.2) 0%,
+    rgba(16, 185, 129, 0.3) 100%
+  );
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow:
+    inset 0 0 30px rgba(16, 185, 129, 0.2),
+    0 4px 20px rgba(16, 185, 129, 0.15);
+}
+
+.hourglass-visual.long-break .hourglass-container {
+  background: linear-gradient(
+    180deg,
+    rgba(59, 130, 246, 0.2) 0%,
+    rgba(59, 130, 246, 0.3) 100%
+  );
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow:
+    inset 0 0 30px rgba(59, 130, 246, 0.2),
+    0 4px 20px rgba(59, 130, 246, 0.15);
+}
+
+.hourglass-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    180deg,
+    var(--accent-gradient-start) 0%,
+    var(--accent-gradient-end) 100%
+  );
+  transition: height 0.5s ease, background var(--transition-slow);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+/* 沙漏填充阶段颜色 */
+.hourglass-visual.break .hourglass-fill {
+  background: linear-gradient(
+    180deg,
+    #34d399 0%,
+    #10b981 100%
+  );
+}
+
+.hourglass-visual.long-break .hourglass-fill {
+  background: linear-gradient(
+    180deg,
+    #60a5fa 0%,
+    #3b82f6 100%
+  );
+}
+
+.hourglass-fill::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    transparent 100%
+  );
+}
+
+.hourglass-markings {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 20px 0;
+  pointer-events: none;
+}
+
+.marking {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.4);
+  margin: 0 12px;
+}
+
+.hourglass-base {
+  margin-top: 12px;
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+.hourglass-base svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* 右侧：时间和控制 */
+.timer-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 时间显示 */
+.time-display {
+  font-size: 72px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -2px;
+  line-height: 1;
+  margin-bottom: 24px;
+  font-feature-settings: "tnum";
+}
+
+/* 进度条 */
+.progress-bar-container {
+  width: 100%;
+  max-width: 280px;
+  margin-bottom: 16px;
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--accent-gradient-start) 0%,
+    var(--accent-gradient-end) 100%
+  );
+  border-radius: var(--radius-full);
+  transition: width 0.5s ease, background var(--transition-slow);
+  position: relative;
+}
+
+.progress-fill::after {
+  content: "";
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background: var(--accent-gradient-end);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+  transition: background var(--transition-slow), box-shadow var(--transition-slow);
+}
+
+/* 进度条阶段颜色 - 使用 timer-section 上的类 */
+.timer-section.phase-break .progress-fill {
+  background: linear-gradient(90deg, #34d399 0%, #10b981 100%);
+}
+
+.timer-section.phase-break .progress-fill::after {
+  background: #10b981;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+.timer-section.phase-long-break .progress-fill {
+  background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 100%);
+}
+
+.timer-section.phase-long-break .progress-fill::after {
+  background: #3b82f6;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+/* 阶段指示器 */
+.phase-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  padding: 8px 16px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.phase-icon {
+  font-size: 16px;
+}

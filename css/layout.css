@@ -1,0 +1,212 @@
+/* ==================== 主卡片容器 ==================== */
+.main-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  padding: 48px 56px;
+  width: 100%;
+  max-width: 720px;
+  box-shadow: var(--shadow-card), var(--shadow-xl);
+  transition: all var(--transition-slow);
+}
+
+/* ==================== 标题区域 ==================== */
+.card-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.main-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* ==================== 阶段切换标签 ==================== */
+.mode-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  padding: 6px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  position: relative;
+}
+
+.mode-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  z-index: 1;
+}
+
+.mode-tab:hover {
+  color: var(--text-primary);
+}
+
+.mode-tab.active {
+  background: var(--bg-card);
+  color: var(--accent-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.mode-tab.active[data-mode="focus"] {
+  color: #f59e0b;
+}
+
+.mode-tab.active[data-mode="break"] {
+  color: #10b981;
+}
+
+.mode-tab.active[data-mode="long-break"] {
+  color: #3b82f6;
+}
+
+/* 阶段切换动画 */
+.mode-tab {
+  transition: all var(--transition-base);
+}
+
+.mode-tab.active {
+  animation: tabPulse 0.4s ease;
+}
+
+@keyframes tabPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 阶段颜色变化过渡 */
+.hourglass-visual {
+  transition: all var(--transition-slow);
+}
+
+.hourglass-visual.focus {
+  --hourglass-border: var(--color-focus);
+  --hourglass-glow: rgba(245, 158, 11, 0.3);
+}
+
+.hourglass-visual.break {
+  --hourglass-border: var(--color-break);
+  --hourglass-glow: rgba(16, 185, 129, 0.3);
+}
+
+.hourglass-visual.long-break {
+  --hourglass-border: var(--color-long-break);
+  --hourglass-glow: rgba(59, 130, 246, 0.3);
+}
+
+/* 阶段切换时的沙漏动画 */
+.hourglass-visual.phase-transition {
+  animation: hourglassShake 0.5s ease;
+}
+
+@keyframes hourglassShake {
+  0%, 100% {
+    transform: translateX(0) rotate(0);
+  }
+  25% {
+    transform: translateX(-3px) rotate(-1deg);
+  }
+  75% {
+    transform: translateX(3px) rotate(1deg);
+  }
+}
+
+/* 时间显示过渡 */
+.time-display {
+  font-size: 72px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -2px;
+  line-height: 1;
+  margin-bottom: 24px;
+  font-feature-settings: "tnum";
+  transition: color var(--transition-slow), transform var(--transition-base);
+}
+
+.time-display.phase-change {
+  animation: timeFlip 0.5s ease;
+}
+
+@keyframes timeFlip {
+  0% {
+    transform: perspective(400px) rotateX(0);
+    opacity: 1;
+  }
+  50% {
+    transform: perspective(400px) rotateX(-10deg);
+    opacity: 0.5;
+  }
+  100% {
+    transform: perspective(400px) rotateX(0);
+    opacity: 1;
+  }
+}
+
+/* 阶段指示器动画 */
+.phase-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  padding: 8px 16px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: all var(--transition-base);
+}
+
+.phase-indicator.phase-change {
+  animation: phaseIndicatorPop 0.4s var(--transition-bounce);
+}
+
+@keyframes phaseIndicatorPop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.phase-icon {
+  font-size: 16px;
+  transition: transform var(--transition-base);
+}
+
+.phase-indicator:hover .phase-icon {
+  transform: rotate(20deg);
+}
+

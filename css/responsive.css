@@ -1,13 +1,61 @@
-import sys
+/* ==================== 全屏模式样式 ==================== */
+:fullscreen body {
+  padding: 40px;
+}
 
-with open('d:/pomodoro-timer/css/styles.css', 'r', encoding='utf-8') as f:
-    content = f.read()
+:fullscreen .main-card {
+  max-width: 900px;
+  padding: 64px 80px;
+}
 
-marker = "/* ==================== 响应式设计 ==================== */"
-parts = content.split(marker)
+:fullscreen .time-display {
+  font-size: 120px;
+}
 
-if len(parts) > 1:
-    new_css = """/* ==================== 响应式设计 ==================== */
+:fullscreen .hourglass-container {
+  width: 180px;
+  height: 260px;
+}
+
+/* Webkit 全屏 */
+:-webkit-full-screen body {
+  padding: 40px;
+}
+
+:-webkit-full-screen .main-card {
+  max-width: 900px;
+  padding: 64px 80px;
+}
+
+:-webkit-full-screen .time-display {
+  font-size: 120px;
+}
+
+:-webkit-full-screen .hourglass-container {
+  width: 180px;
+  height: 260px;
+}
+
+/* Firefox 全屏 */
+:-moz-full-screen body {
+  padding: 40px;
+}
+
+:-moz-full-screen .main-card {
+  max-width: 900px;
+  padding: 64px 80px;
+}
+
+:-moz-full-screen .time-display {
+  font-size: 120px;
+}
+
+:-moz-full-screen .hourglass-container {
+  width: 180px;
+  height: 260px;
+}
+
+/* ==================== 响应式设计 ==================== */
 /* 平板及以下屏 (<= 768px) */
 @media (max-width: 768px) {
   body {
@@ -320,10 +368,4 @@ if len(parts) > 1:
     transition-duration: 0.01ms !important;
   }
 }
-"""
-    final_content = parts[0] + new_css
-    with open('d:/pomodoro-timer/css/styles.css', 'w', encoding='utf-8') as f:
-        f.write(final_content)
-    print("styles.css updated successfully.")
-else:
-    print("Could not find the marker in styles.css")
+
