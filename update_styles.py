@@ -1,0 +1,329 @@
+import sys
+
+with open('d:/pomodoro-timer/css/styles.css', 'r', encoding='utf-8') as f:
+    content = f.read()
+
+marker = "/* ==================== 响应式设计 ==================== */"
+parts = content.split(marker)
+
+if len(parts) > 1:
+    new_css = """/* ==================== 响应式设计 ==================== */
+/* 平板及以下屏 (<= 768px) */
+@media (max-width: 768px) {
+  body {
+    padding: 16px;
+  }
+  
+  .main-card {
+    padding: 24px 20px;
+    max-width: 100%;
+  }
+
+  .timer-section {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .time-display {
+    font-size: 56px;
+    margin-bottom: 16px;
+  }
+
+  .hourglass-container {
+    width: 110px;
+    height: 160px;
+  }
+
+  .settings-panel {
+    max-width: 100%;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    padding: 20px 24px 24px;
+    max-height: 90vh;
+  }
+
+  .settings-content {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .shortcuts-hint {
+    padding: 10px 12px;
+  }
+
+  .shortcuts-text {
+    font-size: 11px;
+  }
+}
+
+/* 手机竖屏尺寸 (<= 480px) */
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+    align-items: center; /* 居中对齐，避免顶部太紧 */
+  }
+
+  .main-card {
+    padding: 20px 16px;
+    border-radius: var(--radius-lg);
+    width: 100%;
+  }
+
+  .card-header {
+    margin-bottom: 16px;
+  }
+
+  .main-title {
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .mode-tabs {
+    margin-bottom: 20px;
+    padding: 4px;
+  }
+  
+  .mode-tab {
+    padding: 8px 6px;
+    font-size: 13px;
+  }
+
+  /* 核心计时器区域，使用更紧凑的间距 */
+  .timer-section {
+    gap: 16px;
+  }
+
+  .hourglass-visual {
+    transform: scale(0.9); /* 整体缩小沙漏视觉区域 */
+    margin-bottom: -10px; /* 补偿 scale 导致的空白 */
+  }
+
+  .hourglass-container {
+    width: 90px;
+    height: 130px;
+  }
+
+  .hourglass-markings {
+    padding: 10px 0;
+  }
+
+  .time-display {
+    font-size: 48px;
+    margin-bottom: 12px;
+    letter-spacing: -1px;
+  }
+
+  .progress-bar-container {
+    max-width: 240px;
+    margin-bottom: 12px;
+  }
+
+  .phase-indicator {
+    margin-bottom: 16px;
+    padding: 4px 12px;
+    font-size: 12px;
+  }
+
+  .control-buttons {
+    gap: 12px;
+  }
+
+  .control-btn {
+    width: 46px;
+    height: 46px;
+  }
+
+  .control-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .main-btn {
+    width: 56px;
+    height: 56px;
+  }
+
+  /* 悬浮按钮调小 */
+  .top-controls {
+    top: 12px;
+    right: 12px;
+    gap: 8px;
+  }
+
+  .icon-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .icon-btn .icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* 设置面板在小屏适配 */
+  .settings-content {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .settings-group.full-width {
+    grid-column: 1;
+  }
+  
+  .sound-options {
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .sound-option {
+    padding: 8px 4px;
+    font-size: 12px;
+  }
+
+  .shortcuts-hint {
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .settings-footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* 超小屏幕手机 (如 iPhone SE) (<= 380px) */
+@media (max-width: 380px) {
+  .main-card {
+    padding: 16px 12px;
+  }
+  .main-title {
+    font-size: 18px;
+  }
+  .hourglass-visual {
+    transform: scale(0.8);
+    margin-bottom: -20px; 
+  }
+  .time-display {
+    font-size: 40px;
+  }
+  .control-btn {
+    width: 40px;
+    height: 40px;
+  }
+  .main-btn {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* ==================== 手机横屏模式优化 (高度较小) ==================== */
+@media (max-height: 500px) and (orientation: landscape) {
+  body {
+    padding: 8px;
+  }
+
+  .main-card {
+    padding: 12px 20px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .card-header {
+    display: none; /* 横屏时隐藏标题以节省高度 */
+  }
+
+  .mode-tabs {
+    margin-bottom: 12px;
+    padding: 4px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .timer-section {
+    flex-direction: row; /* 横排显示沙漏和时间 */
+    justify-content: center;
+    gap: 32px;
+  }
+
+  .hourglass-visual {
+    transform: scale(0.8);
+    margin-bottom: 0px;
+  }
+
+  .timer-content {
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+  }
+
+  .time-display {
+    font-size: 44px;
+    margin-bottom: 8px;
+  }
+
+  .progress-bar-container {
+    max-width: 200px;
+    margin-bottom: 8px;
+  }
+  
+  .phase-indicator {
+    margin-bottom: 12px;
+    padding: 4px 10px;
+  }
+
+  .control-buttons {
+    gap: 12px;
+  }
+
+  .control-btn {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .main-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .top-controls {
+    top: 8px;
+    right: 8px;
+  }
+}
+
+/* 小高度屏幕 (竖屏但比较矮的设备) */
+@media (max-height: 650px) and (orientation: portrait) {
+  .card-header {
+    display: none; /* 高度极其不够时隐藏标题 */
+  }
+  .hourglass-visual {
+    transform: scale(0.8);
+    margin-bottom: -15px;
+  }
+  .timer-section {
+    gap: 12px;
+  }
+}
+
+/* ==================== 减少动画偏好 ==================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+"""
+    final_content = parts[0] + new_css
+    with open('d:/pomodoro-timer/css/styles.css', 'w', encoding='utf-8') as f:
+        f.write(final_content)
+    print("styles.css updated successfully.")
+else:
+    print("Could not find the marker in styles.css")
