@@ -1,177 +1,187 @@
-/* ==================== 全屏模式样式 ==================== */
-:fullscreen, :-webkit-full-screen, :-moz-full-screen {
+/* ==================== 全屏模式样式 (基于 data-fullscreen 属性) ==================== */
+html[data-fullscreen="true"], 
+html[data-fullscreen="true"] body {
   width: 100vw !important;
+  max-width: 100vw !important;
   height: 100vh !important;
-  overflow: hidden !important; /* 彻底在最高层级截断滚动 */
-}
-
-:fullscreen body, :-webkit-full-screen body, :-moz-full-screen body {
-  padding: 0 !important;
+  height: 100dvh !important; /* 支持移动端动态视口高度 */
+  max-height: 100dvh !important;
   margin: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  overflow: hidden !important; /* 第二层截断滚动 */
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  padding: 0 !important;
+  overflow: hidden !important; /* 彻底截断任何滚动可能 */
+  box-sizing: border-box !important;
   background-color: var(--bg-primary) !important;
-  position: fixed !important;
+  position: fixed !important; /* 将 body 钉在视口内 */
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
 }
 
-:fullscreen .main-card, :-webkit-full-screen .main-card, :-moz-full-screen .main-card {
-  width: 100% !important;
-  max-width: 100% !important;
-  height: 100% !important;
-  max-height: 100% !important;
-  border-radius: 0 !important;
-  padding: 2vmin 4vmin !important;
-  margin: 0 !important;
+html[data-fullscreen="true"] body {
   display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
   align-items: center !important;
-  box-shadow: none !important;
-  overflow: hidden !important;
-  box-sizing: border-box !important;
+  justify-content: center !important;
 }
 
-/* 全屏状态下统一隐藏无关元素 */
-:fullscreen .card-header, :-webkit-full-screen .card-header, :-moz-full-screen .card-header,
-:fullscreen .stats-container, :-webkit-full-screen .stats-container, :-moz-full-screen .stats-container {
+html[data-fullscreen="true"] .main-card {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 2vmin 4vmin !important; /* 统一安全边距 */
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important; 
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* 隐藏无关元素 */
+html[data-fullscreen="true"] .card-header,
+html[data-fullscreen="true"] .stats-container,
+html[data-fullscreen="true"] .settings-panel {
   display: none !important;
 }
 
-/* ---------------- 全屏横屏专属（缩小比例，完美适配） ---------------- */
+/* 悬浮控制按钮绝对固定 */
+html[data-fullscreen="true"] .top-controls {
+  position: fixed !important;
+  top: 4vmin !important;
+  right: 4vmin !important;
+  gap: 2vmin !important;
+  z-index: 9999 !important;
+}
+html[data-fullscreen="true"] .icon-btn {
+  width: min(10vw, 8vh) !important;
+  height: min(10vw, 8vh) !important;
+}
+html[data-fullscreen="true"] .icon-btn svg {
+  width: min(5vw, 4vh) !important;
+  height: min(5vw, 4vh) !important;
+}
+
+html[data-fullscreen="true"] .timer-section {
+  flex: 1 !important;
+  min-height: 0 !important; /* 核心防溢出属性 */
+  width: 100% !important;
+  display: flex !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+html[data-fullscreen="true"] .hourglass-visual {
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+html[data-fullscreen="true"] .hourglass-container {
+  margin: 0 !important;
+  transform: none !important;
+}
+
+html[data-fullscreen="true"] .timer-content {
+  flex-shrink: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+}
+
+/* ---------------- 横屏布局 (天然横向 或 竖向设备尝试横向) ---------------- */
 @media (orientation: landscape) {
-  :fullscreen .mode-tabs, :-webkit-full-screen .mode-tabs, :-moz-full-screen .mode-tabs {
+  html[data-fullscreen="true"] .mode-tabs {
     margin-bottom: 2vmin !important;
-    padding: 0.5vmin !important;
   }
-  
-  :fullscreen .mode-tab, :-webkit-full-screen .mode-tab, :-moz-full-screen .mode-tab {
-    padding: 1vmin 3vmin !important;
-    font-size: 2.5vmin !important; /* 字体进一步缩小 */
+  html[data-fullscreen="true"] .mode-tab {
+    padding: 1.5vmin 3vmin !important;
+    font-size: min(3vw, 4vh) !important; /* 动态适配字号限制 */
   }
 
-  :fullscreen .timer-section, :-webkit-full-screen .timer-section, :-moz-full-screen .timer-section {
+  html[data-fullscreen="true"] .timer-section {
     flex-direction: row !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 8vw !important; /* 减小间距 */
+    gap: 8vw !important; /* 控制左右间距 */
+  }
+
+  /* 沙漏：高度最多占 75%，并限制宽度 */
+  html[data-fullscreen="true"] .hourglass-visual {
+    height: 75vh !important;
+    width: auto !important;
+    aspect-ratio: 0.69 !important;
+  }
+  html[data-fullscreen="true"] .hourglass-container {
+    height: 100% !important;
     width: 100% !important;
-    margin: 0 !important;
-    flex: 1 !important;
-    max-height: 80vh !important;
-  }
-  
-  :fullscreen .hourglass-visual, :-webkit-full-screen .hourglass-visual, :-moz-full-screen .hourglass-visual {
-    transform: none !important;
-    margin: 0 !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  :fullscreen .hourglass-container, :-webkit-full-screen .hourglass-container, :-moz-full-screen .hourglass-container {
-    height: 65vh !important; /* 使用 vh 作为主要基点防溢出 */
-    width: calc(65vh * 0.7) !important; /* 严格维持宽高比 */
-    max-width: 40vw !important;
-    margin: 0 !important;
   }
 
-  :fullscreen .timer-content, :-webkit-full-screen .timer-content, :-moz-full-screen .timer-content {
-    align-items: center !important;
-    justify-content: center !important;
-    margin: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-  }
-
-  :fullscreen .time-display, :-webkit-full-screen .time-display, :-moz-full-screen .time-display {
-    font-size: 20vh !important; /* 根据高度缩小文字 */
-    margin-bottom: 2vh !important;
+  /* 倒计时字号：以 min() 巧妙避免占据太多长宽 */
+  html[data-fullscreen="true"] .time-display {
+    font-size: min(22vw, 36vh) !important;
     line-height: 1 !important;
+    margin-bottom: min(3vw, 4vh) !important;
   }
 
-  :fullscreen .progress-bar-container, :-webkit-full-screen .progress-bar-container, :-moz-full-screen .progress-bar-container {
-    width: 35vw !important;
+  /* 按钮与进度条 */
+  html[data-fullscreen="true"] .progress-bar-container {
+    width: 25vw !important;
     max-width: 300px !important;
-    margin-bottom: 2vh !important;
+    margin-bottom: min(2vw, 3vh) !important;
   }
-
-  :fullscreen .phase-indicator, :-webkit-full-screen .phase-indicator, :-moz-full-screen .phase-indicator {
-    padding: 1vh 2vh !important;
-    font-size: 3vh !important;
-    margin-bottom: 3vh !important;
+  html[data-fullscreen="true"] .phase-indicator {
+    padding: min(1vw, 1.5vh) min(2vw, 3vh) !important;
+    font-size: min(3vw, 4vh) !important;
+    margin-bottom: min(3vw, 5vh) !important;
   }
-
-  :fullscreen .control-buttons, :-webkit-full-screen .control-buttons, :-moz-full-screen .control-buttons {
-    gap: 3vw !important;
+  html[data-fullscreen="true"] .control-buttons {
+    gap: 4vw !important;
   }
-
-  :fullscreen .control-btn, :-webkit-full-screen .control-btn, :-moz-full-screen .control-btn {
-    width: 10vh !important;
-    height: 10vh !important;
+  html[data-fullscreen="true"] .control-btn {
+    width: min(8vw, 12vh) !important;
+    height: min(8vw, 12vh) !important;
   }
-
-  :fullscreen .main-btn, :-webkit-full-screen .main-btn, :-moz-full-screen .main-btn {
-    width: 14vh !important;
-    height: 14vh !important;
-  }
-
-  /* 悬浮控制按钮全屏时缩小并固定在角落 */
-  :fullscreen .top-controls, :-webkit-full-screen .top-controls, :-moz-full-screen .top-controls {
-    top: 2vmin !important;
-    right: 3vmin !important;
-    gap: 1.5vmin !important;
-    position: fixed !important; /* 强制停留在视口 */
-  }
-  :fullscreen .icon-btn, :-webkit-full-screen .icon-btn, :-moz-full-screen .icon-btn {
-    width: 6vmin !important;
-    height: 6vmin !important;
-  }
-  :fullscreen .icon-btn svg, :-webkit-full-screen .icon-btn svg, :-moz-full-screen .icon-btn svg {
-    width: 3vmin !important;
-    height: 3vmin !important;
+  html[data-fullscreen="true"] .main-btn {
+    width: min(10vw, 15vh) !important;
+    height: min(10vw, 15vh) !important;
   }
 }
 
-/* ---------------- 全屏竖屏专属（上下等比例缩放） ---------------- */
+/* ---------------- 竖屏布局 (被迫竖屏时) ---------------- */
 @media (orientation: portrait) {
-  :fullscreen .main-card, :-webkit-full-screen .main-card, :-moz-full-screen .main-card {
-    justify-content: center !important;
+  html[data-fullscreen="true"] .mode-tabs {
+    margin-bottom: 4vh !important;
   }
-
-  :fullscreen .timer-section, :-webkit-full-screen .timer-section, :-moz-full-screen .timer-section {
+  html[data-fullscreen="true"] .mode-tab {
+    padding: 1.5vh 3vh !important;
+    font-size: min(4vw, 3vh) !important;
+  }
+  
+  html[data-fullscreen="true"] .timer-section {
     flex-direction: column !important;
-    gap: 5vh !important;
-    justify-content: center !important;
-    align-items: center !important;
+    gap: 6vh !important;
   }
-
-  :fullscreen .hourglass-container, :-webkit-full-screen .hourglass-container, :-moz-full-screen .hourglass-container {
+  
+  html[data-fullscreen="true"] .hourglass-visual {
     height: 35vh !important;
-    width: 24.5vh !important;
-    margin: 0 !important;
+    width: auto !important;
+    aspect-ratio: 0.69 !important;
+  }
+  html[data-fullscreen="true"] .hourglass-container {
+    height: 100% !important;
+    width: 100% !important;
   }
   
-  :fullscreen .hourglass-visual, :-webkit-full-screen .hourglass-visual, :-moz-full-screen .hourglass-visual {
-    margin: 0 !important;
-  }
-
-  :fullscreen .time-display, :-webkit-full-screen .time-display, :-moz-full-screen .time-display {
-    font-size: 12vh !important;
-    margin: 0 0 2vh 0 !important;
-  }
-  
-  :fullscreen .top-controls, :-webkit-full-screen .top-controls, :-moz-full-screen .top-controls {
-    top: 2vh !important;
-    right: 4vw !important;
-    position: fixed !important;
+  html[data-fullscreen="true"] .time-display {
+    font-size: min(25vw, 15vh) !important;
   }
 }
 
