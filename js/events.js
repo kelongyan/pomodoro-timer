@@ -101,39 +101,58 @@ function toggleFullscreen() {
   ) {
     // 进入全屏
     const docEl = document.documentElement;
-    if (docEl.requestFullscreen) {
-      docEl
-        .requestFullscreen()
+    const requestFs =
+      docEl.requestFullscreen ||
+      docEl.webkitRequestFullscreen ||
+      docEl.mozRequestFullScreen ||
+      docEl.msRequestFullscreen;
+
+    if (requestFs) {
+      requestFs
+        .call(docEl)
         .then(() => {
-          if (screen.orientation && screen.orientation.lock) {
-            screen.orientation
-              .lock("landscape")
-              .catch((err) =>
-                console.log("Screen orientation lock failed:", err),
-              );
+          // 尝试锁定为横屏
+          const lockOrientation =
+            screen.orientation?.lock ||
+            screen.mozLockOrientation ||
+            screen.msLockOrientation;
+          if (lockOrientation) {
+            try {
+              lockOrientation
+                .call(screen.orientation || screen, "landscape")
+                .catch((e) => console.log("Orientation lock failed:", e));
+            } catch (e) {
+              console.log("Orientation lock not supported:", e);
+            }
           }
         })
         .catch((err) => console.log(err));
-    } else if (docEl.webkitRequestFullscreen) {
-      docEl.webkitRequestFullscreen();
-    } else if (docEl.mozRequestFullScreen) {
-      docEl.mozRequestFullScreen();
     }
   } else {
     // 退出全屏
-    if (document.exitFullscreen) {
-      document
-        .exitFullscreen()
+    const exitFs =
+      document.exitFullscreen ||
+      document.webkitExitFullscreen ||
+      document.mozCancelFullScreen ||
+      document.msExitFullscreen;
+
+    if (exitFs) {
+      exitFs
+        .call(document)
         .then(() => {
-          if (screen.orientation && screen.orientation.unlock) {
-            screen.orientation.unlock();
+          const unlockOrientation =
+            screen.orientation?.unlock ||
+            screen.mozUnlockOrientation ||
+            screen.msUnlockOrientation;
+          if (unlockOrientation) {
+            try {
+              unlockOrientation.call(screen.orientation || screen);
+            } catch (e) {
+              console.log("Orientation unlock not supported:", e);
+            }
           }
         })
         .catch((err) => console.log(err));
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
     }
   }
 }
