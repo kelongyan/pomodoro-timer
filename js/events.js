@@ -94,13 +94,26 @@ function handleKeyboardShortcuts(e) {
  * 切换全屏模式
  */
 function toggleFullscreen() {
-  if (!document.fullscreenElement &&
-      !document.webkitFullscreenElement &&
-      !document.mozFullScreenElement) {
+  if (
+    !document.fullscreenElement &&
+    !document.webkitFullscreenElement &&
+    !document.mozFullScreenElement
+  ) {
     // 进入全屏
     const docEl = document.documentElement;
     if (docEl.requestFullscreen) {
-      docEl.requestFullscreen();
+      docEl
+        .requestFullscreen()
+        .then(() => {
+          if (screen.orientation && screen.orientation.lock) {
+            screen.orientation
+              .lock("landscape")
+              .catch((err) =>
+                console.log("Screen orientation lock failed:", err),
+              );
+          }
+        })
+        .catch((err) => console.log(err));
     } else if (docEl.webkitRequestFullscreen) {
       docEl.webkitRequestFullscreen();
     } else if (docEl.mozRequestFullScreen) {
@@ -109,7 +122,14 @@ function toggleFullscreen() {
   } else {
     // 退出全屏
     if (document.exitFullscreen) {
-      document.exitFullscreen();
+      document
+        .exitFullscreen()
+        .then(() => {
+          if (screen.orientation && screen.orientation.unlock) {
+            screen.orientation.unlock();
+          }
+        })
+        .catch((err) => console.log(err));
     } else if (document.webkitExitFullscreen) {
       document.webkitExitFullscreen();
     } else if (document.mozCancelFullScreen) {
@@ -122,9 +142,11 @@ function toggleFullscreen() {
  * 处理全屏状态变化
  */
 function handleFullscreenChange() {
-  const isFullscreen = !!(document.fullscreenElement ||
-                         document.webkitFullscreenElement ||
-                         document.mozFullScreenElement);
+  const isFullscreen = !!(
+    document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.mozFullScreenElement
+  );
   document.documentElement.setAttribute("data-fullscreen", isFullscreen);
 }
 

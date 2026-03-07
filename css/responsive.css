@@ -1,67 +1,162 @@
 /* ==================== 全屏模式样式 ==================== */
 :fullscreen body {
-  padding: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 :fullscreen .main-card {
-  max-width: 900px;
-  padding: 64px 80px;
+  max-width: 100vw;
+  height: 100vh;
+  border-radius: 0;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 :fullscreen .time-display {
-  font-size: 120px;
+  font-size: 15vh;
 }
 
 :fullscreen .hourglass-container {
-  width: 180px;
-  height: 260px;
+  height: 30vh;
+  width: auto;
+  aspect-ratio: 0.7;
 }
 
-/* Webkit 全屏 */
+/* 兼容写法 - Webkit */
 :-webkit-full-screen body {
-  padding: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
 :-webkit-full-screen .main-card {
-  max-width: 900px;
-  padding: 64px 80px;
-}
-
-:-webkit-full-screen .time-display {
-  font-size: 120px;
-}
-
-:-webkit-full-screen .hourglass-container {
-  width: 180px;
-  height: 260px;
-}
-
-/* Firefox 全屏 */
-:-moz-full-screen body {
+  max-width: 100vw;
+  height: 100vh;
+  border-radius: 0;
   padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+:-webkit-full-screen .time-display {
+  font-size: 15vh;
+}
+:-webkit-full-screen .hourglass-container {
+  height: 30vh;
+  width: auto;
+  aspect-ratio: 0.7;
 }
 
+/* 兼容写法 - Firefox */
+:-moz-full-screen body {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 :-moz-full-screen .main-card {
-  max-width: 900px;
-  padding: 64px 80px;
+  max-width: 100vw;
+  height: 100vh;
+  border-radius: 0;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-
 :-moz-full-screen .time-display {
-  font-size: 120px;
+  font-size: 15vh;
 }
-
 :-moz-full-screen .hourglass-container {
-  width: 180px;
-  height: 260px;
+  height: 30vh;
+  width: auto;
+  aspect-ratio: 0.7;
 }
 
-/* ==================== 响应式设计 ==================== */
+/* ==================== 移动端全屏特别优化 ==================== */
+@media (max-width: 768px) {
+  :fullscreen .main-card,
+  :-webkit-full-screen .main-card,
+  :-moz-full-screen .main-card {
+    padding: 20px;
+  }
+}
+
+/* 移动端横屏全屏下的极致并排布局 */
+@media (max-height: 500px) and (orientation: landscape) {
+  :fullscreen .main-card,
+  :-webkit-full-screen .main-card,
+  :-moz-full-screen .main-card {
+    padding: 10px;
+    align-items: center;
+  }
+
+  :fullscreen .card-header,
+  :-webkit-full-screen .card-header,
+  :-moz-full-screen .card-header {
+    display: none;
+  }
+
+  :fullscreen .mode-tabs,
+  :-webkit-full-screen .mode-tabs,
+  :-moz-full-screen .mode-tabs {
+    margin-bottom: 5px;
+    padding: 2px;
+  }
+
+  :fullscreen .timer-section,
+  :-webkit-full-screen .timer-section,
+  :-moz-full-screen .timer-section {
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-top: 5px;
+  }
+
+  :fullscreen .hourglass-visual,
+  :-webkit-full-screen .hourglass-visual,
+  :-moz-full-screen .hourglass-visual {
+    transform: scale(0.9);
+  }
+
+  :fullscreen .hourglass-container,
+  :-webkit-full-screen .hourglass-container,
+  :-moz-full-screen .hourglass-container {
+    height: 50vh;
+    margin-bottom: 0;
+  }
+
+  :fullscreen .time-display,
+  :-webkit-full-screen .time-display,
+  :-moz-full-screen .time-display {
+    font-size: 25vh; /* 横屏时间占据主导 */
+    margin-bottom: 2px;
+  }
+
+  :fullscreen .progress-bar-container,
+  :-webkit-full-screen .progress-bar-container,
+  :-moz-full-screen .progress-bar-container {
+    margin-bottom: 2px;
+  }
+
+  :fullscreen .phase-indicator,
+  :-webkit-full-screen .phase-indicator,
+  :-moz-full-screen .phase-indicator {
+    padding: 2px 10px;
+    margin-bottom: 5px;
+  }
+}
+
+/* ==================== 响应式设计基础覆盖 ==================== */
 /* 平板及以下屏 (<= 768px) */
 @media (max-width: 768px) {
   body {
     padding: 16px;
   }
-  
+
   .main-card {
     padding: 24px 20px;
     max-width: 100%;
@@ -133,7 +228,7 @@
     margin-bottom: 20px;
     padding: 4px;
   }
-  
+
   .mode-tab {
     padding: 8px 6px;
     font-size: 13px;
@@ -220,7 +315,7 @@
   .settings-group.full-width {
     grid-column: 1;
   }
-  
+
   .sound-options {
     flex-direction: row;
     gap: 8px;
@@ -253,7 +348,7 @@
   }
   .hourglass-visual {
     transform: scale(0.8);
-    margin-bottom: -20px; 
+    margin-bottom: -20px;
   }
   .time-display {
     font-size: 40px;
@@ -318,7 +413,7 @@
     max-width: 200px;
     margin-bottom: 8px;
   }
-  
+
   .phase-indicator {
     margin-bottom: 12px;
     padding: 4px 10px;
@@ -332,7 +427,7 @@
     width: 40px;
     height: 40px;
   }
-  
+
   .main-btn {
     width: 48px;
     height: 48px;
@@ -368,4 +463,3 @@
     transition-duration: 0.01ms !important;
   }
 }
-
