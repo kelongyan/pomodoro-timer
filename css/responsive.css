@@ -106,23 +106,24 @@
     width: 100vw !important;
     height: 100vh !important;
     height: 100dvh !important;
-    overflow: hidden !important; /* 彻底截断外层滚动 */
-    position: fixed !important; /* 将 body 钉在视口内 */
+    overflow: hidden !important;
+    position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
-    background-color: var(--bg-primary);
-    touch-action: none !important; /* 防止 Safari 的捏合缩放 */
+    background-color: var(--bg-primary) !important;
+    touch-action: none !important;
+    overscroll-behavior: none !important;
   }
 
-  /* 使得主卡片彻底挤满视口并防止内容溢出 */
+  /* 主卡片完全填充且居中 */
   .main-card {
     width: 100vw !important;
     height: 100vh !important;
     height: 100dvh !important;
-    max-width: 100vw !important;
-    max-height: 100dvh !important;
+    max-width: none !important;
+    max-height: none !important;
     margin: 0 !important;
     padding: 2vh 4vw !important;
     border-radius: 0 !important;
@@ -131,7 +132,7 @@
     justify-content: center !important;
     align-items: center !important;
     box-sizing: border-box !important;
-    overflow: hidden !important; /* 彻底截断内层滚动 */
+    overflow: hidden !important;
     box-shadow: none !important;
   }
 
@@ -145,32 +146,32 @@
   /* 悬浮控制按钮绝对固定在边角 */
   .top-controls {
     position: fixed !important;
-    top: 3vh !important;
-    right: 3vw !important;
+    top: 4vh !important;
+    right: 4vw !important;
     gap: 2vw !important;
     z-index: 9999 !important;
     display: flex !important;
   }
   .icon-btn {
-    width: min(8vw, 10vh) !important;
-    height: min(8vw, 10vh) !important;
+    width: 12vh !important;
+    height: 12vh !important;
   }
   .icon-btn svg {
-    width: min(4vw, 5vh) !important;
-    height: min(4vw, 5vh) !important;
+    width: 6vh !important;
+    height: 6vh !important;
   }
 
   /* 模式切换 (短休息等) */
   .mode-tabs {
     margin-bottom: 2vh !important;
-    padding: 0.5vh 1vw !important;
+    padding: 0 !important;
   }
   .mode-tab {
-    padding: 1.5vh 3vw !important;
-    font-size: min(3vw, 5vh) !important;
+    padding: 1.5vh 4vw !important;
+    font-size: 5vh !important;
   }
   .mode-tab .tab-icon {
-    font-size: min(3vw, 5vh) !important;
+    font-size: 5vh !important;
   }
 
   /* 横向分割为左右两部分！核心！ */
@@ -179,7 +180,7 @@
     gap: 8vw !important;
     width: 100% !important;
     flex: 1 !important;
-    min-height: 0 !important; /* 让 flex 子元素防溢出 */
+    min-height: 0 !important;
     align-items: center !important;
     justify-content: center !important;
     padding: 0 !important;
@@ -188,10 +189,9 @@
 
   /* 左侧：沙漏严控高宽比例 */
   .hourglass-visual {
-    height: 70vh !important;
-    width: calc(70vh * 0.7) !important; /* 0.7倍长宽比 */
-    max-width: 40vw !important;
-    transform: none !important; /* 取消原来的 scale(0.9) 等缩放，防止变形 */
+    height: 75vh !important;
+    width: 50vh !important; /* 强制锁定比例，不用 calc */
+    transform: none !important;
     margin: 0 !important;
     flex-shrink: 0 !important;
     display: flex !important;
@@ -201,6 +201,9 @@
   .hourglass-container {
     height: 100% !important;
     width: 100% !important;
+  }
+  .hourglass-base {
+    display: none !important; /* 隐藏底部托盘防止撑破高度 */
   }
 
   /* 右侧：计时与按钮的容器紧凑排列 */
@@ -214,26 +217,26 @@
     flex-shrink: 0 !important;
   }
 
-  /* 时间巨大化导致滑动的罪魁祸首在此修复！用 min(vw, vh) 保护 */
+  /* 时间极大化导致滑动的罪魁祸首在此修复！绑定到 vh */
   .time-display {
-    font-size: min(20vw, 36vh) !important;
+    font-size: 32vh !important;
     line-height: 1 !important;
     margin: 0 0 2vh 0 !important;
     letter-spacing: -1px !important;
   }
 
   .progress-bar-container {
-    width: 30vw !important;
+    width: 35vw !important;
     margin-bottom: 2vh !important;
   }
 
   .phase-indicator {
-    padding: 1vh 2vh !important;
-    font-size: min(2.5vw, 4.5vh) !important;
+    padding: 1vh 2vw !important;
+    font-size: 5vh !important;
     margin-bottom: 3vh !important;
   }
   .phase-indicator .phase-icon {
-    font-size: min(2.5vw, 4.5vh) !important;
+    font-size: 5vh !important;
   }
 
   .control-buttons {
@@ -241,17 +244,17 @@
   }
 
   .control-btn {
-    width: min(8vw, 13vh) !important;
-    height: min(8vw, 13vh) !important;
+    width: 14vh !important;
+    height: 14vh !important;
   }
   .control-btn svg {
-    width: min(4vw, 6.5vh) !important;
-    height: min(4vw, 6.5vh) !important;
+    width: 6vh !important;
+    height: 6vh !important;
   }
 
   .main-btn {
-    width: min(10vw, 16vh) !important;
-    height: min(10vw, 16vh) !important;
+    width: 18vh !important;
+    height: 18vh !important;
   }
 }
 
