@@ -18,6 +18,156 @@
   <!-- 添加网站图标 -->
   <link rel="icon" type="image/png" href="logo.png" />
   <link rel="apple-touch-icon" href="logo.png" />
+
+  <!-- 紧急拦截与强力覆盖：针对鸿蒙/iOS等移动端极其顽固的缓存、以及系统全屏下计算vh出错（当作长边计算导致字体巨大）的终极修补程序 -->
+  <style id="mobile-fullscreen-patch">
+    @media screen and (max-height: 600px) and (min-aspect-ratio: 1/1),
+    screen and (max-width: 950px) and (orientation: landscape) {
+
+      /* 将原来使用的可能有Bug的vh/vw全部废除，彻底改用最安全下限的 vmin（只认屏幕的绝对短边，就算手机系统发狂也不会变异） */
+      html,
+      body,
+      html[data-fullscreen="true"] body,
+      :fullscreen body {
+        width: 100vw !important;
+        height: 100vh !important;
+        overflow: hidden !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: var(--bg-primary) !important;
+      }
+
+      .main-card {
+        padding: 2vmin 4vmin !important;
+        box-sizing: border-box !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        max-width: none !important;
+        max-height: none !important;
+        border-radius: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        overflow: hidden !important;
+      }
+
+      .card-header,
+      .stats-container,
+      .pomodoro-count,
+      .hourglass-base {
+        display: none !important;
+      }
+
+      .top-controls {
+        position: fixed !important;
+        top: 3vmin !important;
+        right: 3vmin !important;
+        gap: 2vmin !important;
+        z-index: 9999 !important;
+        display: flex !important;
+      }
+
+      .icon-btn {
+        width: 9vmin !important;
+        height: 9vmin !important;
+      }
+
+      .icon-btn svg {
+        width: 4.5vmin !important;
+        height: 4.5vmin !important;
+      }
+
+      .mode-tabs {
+        margin-bottom: 2vmin !important;
+        padding: 0 !important;
+      }
+
+      .mode-tab {
+        padding: 1.5vmin 3vmin !important;
+        font-size: 3.5vmin !important;
+      }
+
+      .mode-tab .tab-icon {
+        font-size: 3.5vmin !important;
+      }
+
+      .timer-section {
+        flex-direction: row !important;
+        gap: 6vmin !important;
+        width: 100% !important;
+        flex: 1 !important;
+        justify-content: center !important;
+        align-items: center !important;
+      }
+
+      /* 左侧沙漏方块：严格卡死为屏幕短边的 50% */
+      .hourglass-visual {
+        height: 50vmin !important;
+        width: 33.3vmin !important;
+        transform: none !important;
+        margin: 0 !important;
+        flex-shrink: 0 !important;
+      }
+
+      .hourglass-container {
+        height: 100% !important;
+        width: 100% !important;
+      }
+
+      /* 时间：从之前可能暴走成占据半个屏幕宽度的 Bug，被死死按在 24vmin 的精致大小 */
+      .timer-content {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        margin: 0 !important;
+        flex-shrink: 0 !important;
+      }
+
+      .time-display {
+        font-size: 26vmin !important;
+        line-height: 1 !important;
+        margin: 0 0 2vmin 0 !important;
+        letter-spacing: -1px !important;
+      }
+
+      .progress-bar-container {
+        width: 40vmin !important;
+        margin-bottom: 2vmin !important;
+      }
+
+      .phase-indicator {
+        padding: 1vmin 2vmin !important;
+        font-size: 4vmin !important;
+        margin-bottom: 2vmin !important;
+      }
+
+      .phase-indicator .phase-icon {
+        font-size: 4vmin !important;
+      }
+
+      .control-buttons {
+        gap: 4vmin !important;
+      }
+
+      .control-btn {
+        width: 11vmin !important;
+        height: 11vmin !important;
+      }
+
+      .control-btn svg {
+        width: 5vmin !important;
+        height: 5vmin !important;
+      }
+
+      .main-btn {
+        width: 15vmin !important;
+        height: 15vmin !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
