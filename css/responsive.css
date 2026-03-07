@@ -98,8 +98,8 @@
   }
 }
 
-/* 3. 移动端横屏极限适配 (高度<=500px 或 宽度<=950px且横放手机) */
-@media screen and (max-height: 500px) and (orientation: landscape),
+/* 3. 移动端横屏极限适配 (高度<=600px 且 宽度大于高度，或强制 orientation: landscape) */
+@media screen and (max-height: 600px) and (min-aspect-ratio: 1/1),
   screen and (max-width: 950px) and (orientation: landscape) {
   html,
   body {
