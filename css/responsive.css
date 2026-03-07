@@ -125,7 +125,7 @@
     max-width: none !important;
     max-height: none !important;
     margin: 0 !important;
-    padding: 2vh 4vw !important;
+    padding: 5vh 4vw 2vh !important;
     border-radius: 0 !important;
     display: flex !important;
     flex-direction: column !important;
@@ -161,23 +161,23 @@
     height: 4.5vh !important;
   }
 
-  /* 模式切换 (短休息等) */
+  /* 模式切换 (短休息等) - 调整间距 */
   .mode-tabs {
-    margin-bottom: 1.5vh !important;
+    margin-bottom: 3vh !important;
     padding: 0 !important;
   }
   .mode-tab {
-    padding: 1vh 3vw !important;
-    font-size: 3.5vh !important;
+    padding: 1.2vh 3.5vw !important;
+    font-size: 3.2vh !important;
   }
   .mode-tab .tab-icon {
-    font-size: 3.5vh !important;
+    font-size: 3.2vh !important;
   }
 
   /* 横向分割为左右两部分！核心！ */
   .timer-section {
     flex-direction: row !important;
-    gap: 6vw !important;
+    gap: 4vw !important;
     width: 100% !important;
     flex: 1 !important;
     min-height: 0 !important;
@@ -189,8 +189,8 @@
 
   /* 左侧：沙漏严控高宽比例 */
   .hourglass-visual {
-    height: 50vh !important;
-    width: 33.3vh !important; /* 强制锁定比例，不用 calc */
+    height: 45vh !important;
+    width: 30vh !important; /* 强制锁定比例，不用 calc */
     transform: none !important;
     margin: 0 !important;
     flex-shrink: 0 !important;
@@ -219,7 +219,7 @@
 
   /* 时间极大化导致滑动的罪魁祸首在此修复！绑定到 vh */
   .time-display {
-    font-size: 24vh !important;
+    font-size: 20vh !important;
     line-height: 1 !important;
     margin: 0 0 1.5vh 0 !important;
     letter-spacing: -1px !important;
