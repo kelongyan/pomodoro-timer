@@ -153,31 +153,31 @@
     display: flex !important;
   }
   .icon-btn {
-    width: 12vh !important;
-    height: 12vh !important;
+    width: 9vh !important;
+    height: 9vh !important;
   }
   .icon-btn svg {
-    width: 6vh !important;
-    height: 6vh !important;
+    width: 4.5vh !important;
+    height: 4.5vh !important;
   }
 
   /* 模式切换 (短休息等) */
   .mode-tabs {
-    margin-bottom: 2vh !important;
+    margin-bottom: 1.5vh !important;
     padding: 0 !important;
   }
   .mode-tab {
-    padding: 1.5vh 4vw !important;
-    font-size: 5vh !important;
+    padding: 1vh 3vw !important;
+    font-size: 3.5vh !important;
   }
   .mode-tab .tab-icon {
-    font-size: 5vh !important;
+    font-size: 3.5vh !important;
   }
 
   /* 横向分割为左右两部分！核心！ */
   .timer-section {
     flex-direction: row !important;
-    gap: 8vw !important;
+    gap: 6vw !important;
     width: 100% !important;
     flex: 1 !important;
     min-height: 0 !important;
@@ -189,8 +189,8 @@
 
   /* 左侧：沙漏严控高宽比例 */
   .hourglass-visual {
-    height: 75vh !important;
-    width: 50vh !important; /* 强制锁定比例，不用 calc */
+    height: 50vh !important;
+    width: 33.3vh !important; /* 强制锁定比例，不用 calc */
     transform: none !important;
     margin: 0 !important;
     flex-shrink: 0 !important;
@@ -219,42 +219,42 @@
 
   /* 时间极大化导致滑动的罪魁祸首在此修复！绑定到 vh */
   .time-display {
-    font-size: 32vh !important;
+    font-size: 24vh !important;
     line-height: 1 !important;
-    margin: 0 0 2vh 0 !important;
+    margin: 0 0 1.5vh 0 !important;
     letter-spacing: -1px !important;
   }
 
   .progress-bar-container {
-    width: 35vw !important;
-    margin-bottom: 2vh !important;
+    width: 28vw !important;
+    margin-bottom: 1.5vh !important;
   }
 
   .phase-indicator {
-    padding: 1vh 2vw !important;
-    font-size: 5vh !important;
-    margin-bottom: 3vh !important;
+    padding: 0.8vh 1.5vw !important;
+    font-size: 3.5vh !important;
+    margin-bottom: 2vh !important;
   }
   .phase-indicator .phase-icon {
-    font-size: 5vh !important;
+    font-size: 3.5vh !important;
   }
 
   .control-buttons {
-    gap: 4vw !important;
+    gap: 3.5vw !important;
   }
 
   .control-btn {
-    width: 14vh !important;
-    height: 14vh !important;
+    width: 10vh !important;
+    height: 10vh !important;
   }
   .control-btn svg {
-    width: 6vh !important;
-    height: 6vh !important;
+    width: 4.5vh !important;
+    height: 4.5vh !important;
   }
 
   .main-btn {
-    width: 18vh !important;
-    height: 18vh !important;
+    width: 13vh !important;
+    height: 13vh !important;
   }
 }
 
