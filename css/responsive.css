@@ -1,490 +1,309 @@
-/* ==================== 全屏模式样式 (基于 data-fullscreen 属性) ==================== */
-html[data-fullscreen="true"], 
-html[data-fullscreen="true"] body {
-  width: 100vw !important;
-  max-width: 100vw !important;
-  height: 100vh !important;
-  height: 100dvh !important; /* 支持移动端动态视口高度 */
-  max-height: 100dvh !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important; /* 彻底截断任何滚动可能 */
-  box-sizing: border-box !important;
-  background-color: var(--bg-primary) !important;
-  position: fixed !important; /* 将 body 钉在视口内 */
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-}
+/* ==================== 响应式设计 ==================== */
 
-html[data-fullscreen="true"] body {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-html[data-fullscreen="true"] .main-card {
-  width: 100% !important;
-  height: 100% !important;
-  max-width: none !important;
-  max-height: none !important;
-  border-radius: 0 !important;
-  margin: 0 !important;
-  padding: 2vmin 4vmin !important; /* 统一安全边距 */
-  box-shadow: none !important;
-  box-sizing: border-box !important;
-  overflow: hidden !important; 
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-/* 隐藏无关元素 */
-html[data-fullscreen="true"] .card-header,
-html[data-fullscreen="true"] .stats-container,
-html[data-fullscreen="true"] .settings-panel {
-  display: none !important;
-}
-
-/* 悬浮控制按钮绝对固定 */
-html[data-fullscreen="true"] .top-controls {
-  position: fixed !important;
-  top: 4vmin !important;
-  right: 4vmin !important;
-  gap: 2vmin !important;
-  z-index: 9999 !important;
-}
-html[data-fullscreen="true"] .icon-btn {
-  width: min(10vw, 8vh) !important;
-  height: min(10vw, 8vh) !important;
-}
-html[data-fullscreen="true"] .icon-btn svg {
-  width: min(5vw, 4vh) !important;
-  height: min(5vw, 4vh) !important;
-}
-
-html[data-fullscreen="true"] .timer-section {
-  flex: 1 !important;
-  min-height: 0 !important; /* 核心防溢出属性 */
-  width: 100% !important;
-  display: flex !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-html[data-fullscreen="true"] .hourglass-visual {
-  flex-shrink: 0 !important;
-  margin: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-html[data-fullscreen="true"] .hourglass-container {
-  margin: 0 !important;
-  transform: none !important;
-}
-
-html[data-fullscreen="true"] .timer-content {
-  flex-shrink: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  margin: 0 !important;
-}
-
-/* ---------------- 横屏布局 (天然横向 或 竖向设备尝试横向) ---------------- */
-@media (orientation: landscape) {
-  html[data-fullscreen="true"] .mode-tabs {
-    margin-bottom: 2vmin !important;
-  }
-  html[data-fullscreen="true"] .mode-tab {
-    padding: 1.5vmin 3vmin !important;
-    font-size: min(3vw, 4vh) !important; /* 动态适配字号限制 */
-  }
-
-  html[data-fullscreen="true"] .timer-section {
-    flex-direction: row !important;
-    gap: 8vw !important; /* 控制左右间距 */
-  }
-
-  /* 沙漏：高度最多占 75%，并限制宽度 */
-  html[data-fullscreen="true"] .hourglass-visual {
-    height: 75vh !important;
-    width: auto !important;
-    aspect-ratio: 0.69 !important;
-  }
-  html[data-fullscreen="true"] .hourglass-container {
-    height: 100% !important;
-    width: 100% !important;
-  }
-
-  /* 倒计时字号：以 min() 巧妙避免占据太多长宽 */
-  html[data-fullscreen="true"] .time-display {
-    font-size: min(22vw, 36vh) !important;
-    line-height: 1 !important;
-    margin-bottom: min(3vw, 4vh) !important;
-  }
-
-  /* 按钮与进度条 */
-  html[data-fullscreen="true"] .progress-bar-container {
-    width: 25vw !important;
-    max-width: 300px !important;
-    margin-bottom: min(2vw, 3vh) !important;
-  }
-  html[data-fullscreen="true"] .phase-indicator {
-    padding: min(1vw, 1.5vh) min(2vw, 3vh) !important;
-    font-size: min(3vw, 4vh) !important;
-    margin-bottom: min(3vw, 5vh) !important;
-  }
-  html[data-fullscreen="true"] .control-buttons {
-    gap: 4vw !important;
-  }
-  html[data-fullscreen="true"] .control-btn {
-    width: min(8vw, 12vh) !important;
-    height: min(8vw, 12vh) !important;
-  }
-  html[data-fullscreen="true"] .main-btn {
-    width: min(10vw, 15vh) !important;
-    height: min(10vw, 15vh) !important;
-  }
-}
-
-/* ---------------- 竖屏布局 (被迫竖屏时) ---------------- */
-@media (orientation: portrait) {
-  html[data-fullscreen="true"] .mode-tabs {
-    margin-bottom: 4vh !important;
-  }
-  html[data-fullscreen="true"] .mode-tab {
-    padding: 1.5vh 3vh !important;
-    font-size: min(4vw, 3vh) !important;
-  }
-  
-  html[data-fullscreen="true"] .timer-section {
-    flex-direction: column !important;
-    gap: 6vh !important;
-  }
-  
-  html[data-fullscreen="true"] .hourglass-visual {
-    height: 35vh !important;
-    width: auto !important;
-    aspect-ratio: 0.69 !important;
-  }
-  html[data-fullscreen="true"] .hourglass-container {
-    height: 100% !important;
-    width: 100% !important;
-  }
-  
-  html[data-fullscreen="true"] .time-display {
-    font-size: min(25vw, 15vh) !important;
-  }
-}
-
-/* ==================== 响应式设计基础覆盖 ==================== */
-/* 平板及以下屏 (<= 768px) */
+/* 1. 平板及以下屏 (<= 768px) */
 @media (max-width: 768px) {
   body {
     padding: 16px;
   }
-
   .main-card {
     padding: 24px 20px;
     max-width: 100%;
   }
-
   .timer-section {
     flex-direction: column;
     gap: 24px;
   }
-
   .time-display {
     font-size: 56px;
     margin-bottom: 16px;
   }
-
   .hourglass-container {
     width: 110px;
     height: 160px;
   }
-
   .settings-panel {
     max-width: 100%;
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     padding: 20px 24px 24px;
     max-height: 90vh;
   }
-
   .settings-content {
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
   }
-
-  .shortcuts-hint {
-    padding: 10px 12px;
-  }
-
-  .shortcuts-text {
-    font-size: 11px;
-  }
 }
 
-/* 手机竖屏尺寸 (<= 480px) */
+/* 2. 手机竖屏尺寸 (<= 480px) */
 @media (max-width: 480px) {
   body {
     padding: 10px;
-    align-items: center; /* 居中对齐，避免顶部太紧 */
   }
-
   .main-card {
     padding: 20px 16px;
-    border-radius: var(--radius-lg);
     width: 100%;
   }
-
   .card-header {
     margin-bottom: 16px;
   }
-
   .main-title {
     font-size: 22px;
     margin-bottom: 4px;
   }
-
-  .subtitle {
-    font-size: 13px;
-  }
-
   .mode-tabs {
     margin-bottom: 20px;
-    padding: 4px;
   }
-
-  .mode-tab {
-    padding: 8px 6px;
-    font-size: 13px;
-  }
-
-  /* 核心计时器区域，使用更紧凑的间距 */
   .timer-section {
     gap: 16px;
   }
-
   .hourglass-visual {
-    transform: scale(0.9); /* 整体缩小沙漏视觉区域 */
-    margin-bottom: -10px; /* 补偿 scale 导致的空白 */
+    transform: scale(0.9);
+    margin-bottom: -10px;
   }
-
   .hourglass-container {
     width: 90px;
     height: 130px;
   }
-
-  .hourglass-markings {
-    padding: 10px 0;
-  }
-
   .time-display {
     font-size: 48px;
     margin-bottom: 12px;
-    letter-spacing: -1px;
   }
-
   .progress-bar-container {
     max-width: 240px;
-    margin-bottom: 12px;
   }
-
-  .phase-indicator {
-    margin-bottom: 16px;
-    padding: 4px 12px;
-    font-size: 12px;
-  }
-
   .control-buttons {
     gap: 12px;
   }
-
   .control-btn {
     width: 46px;
     height: 46px;
   }
-
-  .control-btn svg {
-    width: 20px;
-    height: 20px;
-  }
-
   .main-btn {
     width: 56px;
     height: 56px;
   }
-
-  /* 悬浮按钮调小 */
   .top-controls {
     top: 12px;
     right: 12px;
     gap: 8px;
   }
-
   .icon-btn {
     width: 38px;
     height: 38px;
   }
-
-  .icon-btn .icon {
-    width: 18px;
-    height: 18px;
-  }
-
-  /* 设置面板在小屏适配 */
   .settings-content {
     grid-template-columns: 1fr;
-    gap: 12px;
   }
-
   .settings-group.full-width {
     grid-column: 1;
   }
-
-  .sound-options {
-    flex-direction: row;
-    gap: 8px;
-  }
-
-  .sound-option {
-    padding: 8px 4px;
-    font-size: 12px;
-  }
-
-  .shortcuts-hint {
-    flex-direction: column;
-    gap: 6px;
-    text-align: center;
-  }
-
-  .settings-footer {
-    flex-direction: column;
-    gap: 10px;
-  }
 }
 
-/* 超小屏幕手机 (如 iPhone SE) (<= 380px) */
-@media (max-width: 380px) {
-  .main-card {
-    padding: 16px 12px;
-  }
-  .main-title {
-    font-size: 18px;
-  }
-  .hourglass-visual {
-    transform: scale(0.8);
-    margin-bottom: -20px;
-  }
-  .time-display {
-    font-size: 40px;
-  }
-  .control-btn {
-    width: 40px;
-    height: 40px;
-  }
-  .main-btn {
-    width: 48px;
-    height: 48px;
-  }
-}
-
-/* ==================== 手机横屏模式优化 (高度较小) ==================== */
-@media (max-height: 500px) and (orientation: landscape) {
+/* 3. 移动端横屏极限适配 (高度<=500px 或 宽度<=950px且横放手机) */
+@media screen and (max-height: 500px) and (orientation: landscape),
+  screen and (max-width: 950px) and (orientation: landscape) {
+  html,
   body {
-    padding: 8px;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    overflow: hidden !important; /* 彻底截断外层滚动 */
+    position: fixed !important; /* 将 body 钉在视口内 */
+    top: 0 !important;
+    left: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: var(--bg-primary);
+    touch-action: none !important; /* 防止 Safari 的捏合缩放 */
   }
 
+  /* 使得主卡片彻底挤满视口并防止内容溢出 */
   .main-card {
-    padding: 12px 20px;
-    max-width: 100%;
-    margin: 0 auto;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-width: 100vw !important;
+    max-height: 100dvh !important;
+    margin: 0 !important;
+    padding: 2vh 4vw !important;
+    border-radius: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important; /* 彻底截断内层滚动 */
+    box-shadow: none !important;
   }
 
-  .card-header {
-    display: none; /* 横屏时隐藏标题以节省高度 */
+  /* 完全消灭不必要的冗余模块 */
+  .card-header,
+  .stats-container,
+  .pomodoro-count {
+    display: none !important;
   }
 
+  /* 悬浮控制按钮绝对固定在边角 */
+  .top-controls {
+    position: fixed !important;
+    top: 3vh !important;
+    right: 3vw !important;
+    gap: 2vw !important;
+    z-index: 9999 !important;
+    display: flex !important;
+  }
+  .icon-btn {
+    width: min(8vw, 10vh) !important;
+    height: min(8vw, 10vh) !important;
+  }
+  .icon-btn svg {
+    width: min(4vw, 5vh) !important;
+    height: min(4vw, 5vh) !important;
+  }
+
+  /* 模式切换 (短休息等) */
   .mode-tabs {
-    margin-bottom: 12px;
-    padding: 4px;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 2vh !important;
+    padding: 0.5vh 1vw !important;
+  }
+  .mode-tab {
+    padding: 1.5vh 3vw !important;
+    font-size: min(3vw, 5vh) !important;
+  }
+  .mode-tab .tab-icon {
+    font-size: min(3vw, 5vh) !important;
   }
 
+  /* 横向分割为左右两部分！核心！ */
   .timer-section {
-    flex-direction: row; /* 横排显示沙漏和时间 */
-    justify-content: center;
-    gap: 32px;
+    flex-direction: row !important;
+    gap: 8vw !important;
+    width: 100% !important;
+    flex: 1 !important;
+    min-height: 0 !important; /* 让 flex 子元素防溢出 */
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
+  /* 左侧：沙漏严控高宽比例 */
   .hourglass-visual {
-    transform: scale(0.8);
-    margin-bottom: 0px;
+    height: 70vh !important;
+    width: calc(70vh * 0.7) !important; /* 0.7倍长宽比 */
+    max-width: 40vw !important;
+    transform: none !important; /* 取消原来的 scale(0.9) 等缩放，防止变形 */
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .hourglass-container {
+    height: 100% !important;
+    width: 100% !important;
   }
 
+  /* 右侧：计时与按钮的容器紧凑排列 */
   .timer-content {
-    align-items: center;
-    justify-content: center;
-    margin-top: 5px;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    height: 100% !important;
+    flex-shrink: 0 !important;
   }
 
+  /* 时间巨大化导致滑动的罪魁祸首在此修复！用 min(vw, vh) 保护 */
   .time-display {
-    font-size: 44px;
-    margin-bottom: 8px;
+    font-size: min(20vw, 36vh) !important;
+    line-height: 1 !important;
+    margin: 0 0 2vh 0 !important;
+    letter-spacing: -1px !important;
   }
 
   .progress-bar-container {
-    max-width: 200px;
-    margin-bottom: 8px;
+    width: 30vw !important;
+    margin-bottom: 2vh !important;
   }
 
   .phase-indicator {
-    margin-bottom: 12px;
-    padding: 4px 10px;
+    padding: 1vh 2vh !important;
+    font-size: min(2.5vw, 4.5vh) !important;
+    margin-bottom: 3vh !important;
+  }
+  .phase-indicator .phase-icon {
+    font-size: min(2.5vw, 4.5vh) !important;
   }
 
   .control-buttons {
-    gap: 12px;
+    gap: 4vw !important;
   }
 
   .control-btn {
-    width: 40px;
-    height: 40px;
+    width: min(8vw, 13vh) !important;
+    height: min(8vw, 13vh) !important;
+  }
+  .control-btn svg {
+    width: min(4vw, 6.5vh) !important;
+    height: min(4vw, 6.5vh) !important;
   }
 
   .main-btn {
-    width: 48px;
-    height: 48px;
-  }
-
-  .top-controls {
-    top: 8px;
-    right: 8px;
+    width: min(10vw, 16vh) !important;
+    height: min(10vw, 16vh) !important;
   }
 }
 
-/* 小高度屏幕 (竖屏但比较矮的设备) */
-@media (max-height: 650px) and (orientation: portrait) {
-  .card-header {
-    display: none; /* 高度极其不够时隐藏标题 */
+/* 4. 手动触发全屏兜底 (兼容平板等竖向全屏) 和 data-fullscreen 逻辑 */
+html[data-fullscreen="true"] body,
+:fullscreen body,
+:-webkit-full-screen body,
+:-moz-full-screen body {
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+html[data-fullscreen="true"] .main-card,
+:fullscreen .main-card,
+:-webkit-full-screen .main-card,
+:-moz-full-screen .main-card {
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-width: 100vw !important;
+  border-radius: 0 !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+html[data-fullscreen="true"] .card-header,
+:fullscreen .card-header,
+:-webkit-full-screen .card-header,
+:-moz-full-screen .card-header {
+  display: none !important;
+}
+
+/* 竖屏且强制开启全屏时的修复 */
+@media (orientation: portrait) {
+  html[data-fullscreen="true"] .main-card,
+  :fullscreen .main-card {
+    justify-content: center !important;
+    padding-top: 5vh !important;
+    padding-bottom: 5vh !important;
   }
-  .hourglass-visual {
-    transform: scale(0.8);
-    margin-bottom: -15px;
+  html[data-fullscreen="true"] .timer-section,
+  :fullscreen .timer-section {
+    gap: 5vh !important;
   }
-  .timer-section {
-    gap: 12px;
+  html[data-fullscreen="true"] .time-display,
+  :fullscreen .time-display {
+    font-size: 15vh !important;
+  }
+  html[data-fullscreen="true"] .top-controls,
+  :fullscreen .top-controls {
+    position: fixed !important;
+    top: 2vh !important;
+    right: 4vw !important;
   }
 }
 
