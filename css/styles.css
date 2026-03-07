@@ -1,3 +1,38 @@
+/* ==================== 移动设备优化 ==================== */
+html {
+  -webkit-text-size-adjust: 100%; /* 防止iOS设备自动调整文本大小 */
+  touch-action: manipulation; /* 优化触摸交互，减少延迟 */
+}
+
+body {
+  -webkit-tap-highlight-color: transparent; /* 移除触摸高亮 */
+  -webkit-font-smoothing: antialiased; /* 提高字体渲染质量 */
+  box-sizing: border-box;
+  overflow-x: hidden; /* 防止横向滚动 */
+  min-height: 100vh; /* 确保内容至少填满整个视口 */
+}
+
+/* 确保触摸友好的按钮 */
+button,
+input {
+  -webkit-appearance: none; /* 移除iOS默认样式 */
+  appearance: none;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+/* 触摸反馈优化 */
+@media (hover: none) and (pointer: coarse) {
+  .control-btn:active,
+  .mode-tab:active,
+  .icon-btn:active {
+    transform: scale(0.96) !important;
+  }
+}
+
 /* ==================== CSS 变量定义 ==================== */
 :root {
   /* 浅色主题 - 莫兰迪紫色系 */
@@ -1146,6 +1181,65 @@ body {
   }
 }
 
+/* ==================== 手机横屏模式优化 ==================== */
+@media (max-width: 768px) and (orientation: landscape) {
+  .main-card {
+    max-width: 90%;
+    padding: 24px;
+    margin: 12px auto;
+  }
+
+  .timer-section {
+    flex-direction: row;
+    gap: 32px;
+  }
+
+  .hourglass-container {
+    width: 100px;
+    height: 150px;
+  }
+
+  .time-display {
+    font-size: 48px;
+  }
+
+  .control-buttons {
+    gap: 12px;
+  }
+
+  .control-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .main-btn {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+/* ==================== 小屏幕手机横屏优化 ==================== */
+@media (max-width: 480px) and (orientation: landscape) {
+  .timer-section {
+    gap: 24px;
+  }
+
+  .hourglass-container {
+    width: 85px;
+    height: 125px;
+  }
+
+  .time-display {
+    font-size: 42px;
+  }
+
+  .phase-indicator {
+    margin-bottom: 16px;
+    padding: 4px 12px;
+    font-size: 12px;
+  }
+}
+
 @media (max-width: 480px) {
   body {
     padding: 16px;
@@ -1162,6 +1256,38 @@ body {
 
   .time-display {
     font-size: 48px;
+  }
+
+  /* 计时器区域优化 */
+  .timer-section {
+    gap: 24px;
+  }
+
+  .hourglass-container {
+    width: 100px;
+    height: 140px;
+  }
+
+  .hourglass-markings {
+    padding: 15px 0;
+  }
+
+  .progress-bar-container {
+    max-width: 220px;
+  }
+
+  .phase-indicator {
+    margin-bottom: 24px;
+    padding: 6px 14px;
+    font-size: 13px;
+  }
+
+  .phase-icon {
+    font-size: 14px;
+  }
+
+  .control-buttons {
+    gap: 12px;
   }
 
   .control-btn {
@@ -1230,8 +1356,174 @@ body {
   }
 }
 
-  .settings-footer {
-    flex-direction: column;
+/* ==================== 超小屏幕手机优化 ==================== */
+@media (max-width: 360px) {
+  body {
+    padding: 12px;
+  }
+
+  .main-card {
+    padding: 20px 16px;
+    border-radius: var(--radius-md);
+  }
+
+  .main-title {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .time-display {
+    font-size: 40px;
+  }
+
+  .timer-section {
+    gap: 20px;
+  }
+
+  .hourglass-container {
+    width: 85px;
+    height: 120px;
+  }
+
+  .hourglass-markings {
+    padding: 10px 0;
+  }
+
+  .progress-bar-container {
+    max-width: 180px;
+  }
+
+  .phase-indicator {
+    margin-bottom: 20px;
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+
+  .phase-icon {
+    font-size: 13px;
+  }
+
+  .control-buttons {
+    gap: 8px;
+  }
+
+  .control-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .control-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .main-btn {
+    width: 52px;
+    height: 52px;
+  }
+
+  .top-controls {
+    top: 12px;
+    right: 12px;
+  }
+
+  .icon-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .icon-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mode-tabs {
+    gap: 3px;
+    padding: 3px;
+  }
+
+  .mode-tab {
+    padding: 8px 6px;
+    font-size: 11px;
+  }
+
+  .tab-icon {
+    font-size: 12px;
+  }
+
+  .settings-panel {
+    padding: 16px 20px 20px;
+    max-height: 95vh;
+  }
+
+  .settings-group {
+    margin-bottom: 12px;
+  }
+
+  .settings-label {
+    font-size: 13px;
+  }
+
+  .settings-input {
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+
+  .sound-option {
+    padding: 8px 6px;
+    font-size: 12px;
+  }
+
+  .sound-icon {
+    font-size: 14px;
+  }
+}
+
+/* ==================== 小高度设备优化 ==================== */
+@media (max-height: 600px) and (orientation: portrait) {
+  .main-card {
+    padding: 16px;
+    margin: 8px auto;
+  }
+
+  .card-header {
+    margin-bottom: 20px;
+  }
+
+  .timer-section {
+    gap: 20px;
+  }
+
+  .hourglass-container {
+    height: 140px;
+  }
+
+  .time-display {
+    font-size: 44px;
+    margin-bottom: 16px;
+  }
+
+  .phase-indicator {
+    margin-bottom: 16px;
+    padding: 4px 14px;
+    font-size: 13px;
+  }
+
+  .control-buttons {
+    gap: 10px;
+  }
+
+  .control-btn {
+    width: 46px;
+    height: 46px;
+  }
+
+  .main-btn {
+    width: 54px;
+    height: 54px;
   }
 }
 
