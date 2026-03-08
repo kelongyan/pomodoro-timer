@@ -2,10 +2,34 @@
 
 # ⏳ 时光沙漏瓶 - 你的专属专注守护神 🍅
 
-![版本](https://img.shields.io/badge/版本-v1.0.0-%23f59e0b?style=for-the-badge&logo=javascript&logoColor=white)
-![许可证](https://img.shields.io/badge/许可证-MIT-%2310b981?style=for-the-badge&logo=opensourceinitiative&logoColor=white)
-![纯前端](https://img.shields.io/badge/纯前端-无依赖-%233b82f6?style=for-the-badge&logo=html5&logoColor=white)
-![摸鱼](https://img.shields.io/badge/摸鱼克星-100%%25-%239d174d?style=for-the-badge&logo=bilibili&logoColor=white)
+<!-- 使用更美观的徽章组合 -->
+<p align="center">
+  <a href="https://github.com/kelongyan/pomodoro-timer/releases">
+    <img src="https://img.shields.io/badge/版本-v1.0.0-FF6B35?style=for-the-badge&logo=git&logoColor=white" alt="版本">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/许可证-MIT-10B981?style=for-the-badge&logo=opensourceinitiative&logoColor=white" alt="许可证">
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/技术栈-HTML/CSS/JS-3B82F6?style=for-the-badge&logo=javascript&logoColor=white" alt="技术栈">
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/零依赖-纯原生-EC4899?style=for-the-badge&logo=rocket&logoColor=white" alt="零依赖">
+  </a>
+</p>
+
+<!-- GitHub统计徽章 -->
+<p align="center">
+  <a href="https://github.com/kelongyan/pomodoro-timer/stargazers">
+    <img src="https://img.shields.io/github/stars/kelongyan/pomodoro-timer?style=flat-square&logo=github&color=f59e0b&label=Stars" alt="GitHub stars">
+  </a>
+  <a href="https://github.com/kelongyan/pomodoro-timer/network/members">
+    <img src="https://img.shields.io/github/forks/kelongyan/pomodoro-timer?style=flat-square&logo=github&color=10b981&label=Forks" alt="GitHub forks">
+  </a>
+  <a href="https://github.com/kelongyan/pomodoro-timer/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/kelongyan/pomodoro-timer?style=flat-square&color=3b82f6&label=License" alt="License">
+  </a>
+</p>
 
 ### 🎮 "别刷手机了，沙漏都等急了！" - 一个会说话的番茄钟
 
@@ -54,7 +78,7 @@
 ### **🎯 选项B：极客模式（装逼专用）**
 ```bash
 # 克隆这个超酷的项目
-git clone https://github.com/yourusername/pomodoro-timer.git
+git clone https://github.com/kelongyan/pomodoro-timer.git
 
 # 进入魔法领域
 cd pomodoro-timer
@@ -68,7 +92,7 @@ python -m http.server 8000
 
 ### **🎯 选项C：在线体验（摸鱼神器）**
 ```
-直接访问：[你的GitHub Pages链接]
+在线访问：https://kelongyan.github.io/pomodoro-timer/ （如果已部署）
 适合：办公室、咖啡厅、床上...任何你想摸鱼的地方
 ```
 
@@ -201,7 +225,7 @@ python -m http.server 8000
 ### **🔧 环境准备**
 ```bash
 # 1. 克隆代码
-git clone [你的仓库地址]
+git clone https://github.com/kelongyan/pomodoro-timer.git
 
 # 2. 安装...等等，不用安装！
 # 3. 直接开搞！
@@ -270,13 +294,13 @@ git clone [你的仓库地址]
 
 ## 📞 **联系我们：沙漏の回音**
 
-- **🐛 Bug报告**：[GitHub Issues](https://github.com/yourusername/pomodoro-timer/issues)
+- **🐛 Bug报告**：[GitHub Issues](https://github.com/kelongyan/pomodoro-timer/issues)
   - "沙漏不转了！" 
   - "颜色太丑了！"
   - "我想要会说话的沙漏！"
   
 - **💡 功能建议**：同上，随便提
-- **💌 私信作者**：your.email@example.com
+- **💌 私信作者**：[kelong.yan@foxmail.com](mailto:kelong.yan@foxmail.com)
   - 主题建议："关于沙漏瓶的奇思妙想"
   - 紧急事项："救命！沙漏成精了！"
 
@@ -288,6 +312,18 @@ git clone [你的仓库地址]
 
 **👉 当然是：打开沙漏瓶，开始你的第一个番茄！ 👈**
 
+<p align="center">
+  <a href="https://github.com/kelongyan/pomodoro-timer">
+    <img src="https://img.shields.io/badge/GitHub-查看源码-black?style=for-the-badge&logo=github" alt="GitHub">
+  </a>
+  <a href="https://kelongyan.github.io/pomodoro-timer/">
+    <img src="https://img.shields.io/badge/🌐-在线体验-blue?style=for-the-badge" alt="在线体验">
+  </a>
+  <a href="mailto:kelong.yan@foxmail.com">
+    <img src="https://img.shields.io/badge/📧-联系作者-green?style=for-the-badge" alt="联系作者">
+  </a>
+</p>
+
 **如果这个项目让你的专注力提升了1%，请给它一个 ⭐ Star！**
 
 [⬆️ 回到顶部](#-时光沙漏瓶---你的专属专注守护神-) • [🎮 开始使用](#-3秒启动立刻开干) • [🤝 加入开发](#-加入我们一起玩)
@@ -297,5 +333,9 @@ git clone [你的仓库地址]
 **✨ 时光沙漏瓶 - 让每一秒都有意义 ✨**
 
 *"别让时间像沙子一样从指间溜走，用沙漏瓶抓住它！"*
+
+<p align="center">
+  <sub>Made with ❤️ by <a href="https://github.com/kelongyan">Kelong Yan</a></sub>
+</p>
 
 </div>
