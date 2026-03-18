@@ -61,19 +61,39 @@ const DOM = {
  */
 function updateDisplay() {
   // 更新时间显示
-  DOM.timeDisplay.textContent = formatTime(AppState.timeRemaining);
+  if (isStopwatchMode()) {
+    // 正向计时模式：显示已计时时间
+    DOM.timeDisplay.textContent = formatTime(AppState.timeElapsed);
+    
+    // 更新沙漏填充高度（正向计时：从0到100%）
+    const maxDisplayTime = 60 * 60; // 最大显示1小时，超过后保持100%
+    const progress = Math.min(AppState.timeElapsed / maxDisplayTime, 1);
+    const fillHeight = `${progress * 100}%`;
+    if (DOM.ringProgress) {
+      DOM.ringProgress.style.height = fillHeight;
+    }
 
-  // 更新沙漏填充高度
-  const progress = AppState.timeRemaining / AppState.totalTime;
-  const fillHeight = `${progress * 100}%`;
-  if (DOM.ringProgress) {
-    DOM.ringProgress.style.height = fillHeight;
-  }
+    // 更新进度条（正向计时：从0到100%）
+    const progressFill = document.querySelector(".progress-fill");
+    if (progressFill) {
+      progressFill.style.width = `${progress * 100}%`;
+    }
+  } else {
+    // 倒计时模式
+    DOM.timeDisplay.textContent = formatTime(AppState.timeRemaining);
 
-  // 更新进度条
-  const progressFill = document.querySelector(".progress-fill");
-  if (progressFill) {
-    progressFill.style.width = `${(1 - progress) * 100}%`;
+    // 更新沙漏填充高度
+    const progress = AppState.timeRemaining / AppState.totalTime;
+    const fillHeight = `${progress * 100}%`;
+    if (DOM.ringProgress) {
+      DOM.ringProgress.style.height = fillHeight;
+    }
+
+    // 更新进度条
+    const progressFill = document.querySelector(".progress-fill");
+    if (progressFill) {
+      progressFill.style.width = `${(1 - progress) * 100}%`;
+    }
   }
 
   // 更新页面标题
@@ -93,6 +113,7 @@ function updatePhaseUI() {
     focus: "专注",
     break: "短休息",
     "long-break": "长休息",
+    stopwatch: "正向计时",
   };
 
   if (DOM.phaseLabel) {
@@ -106,6 +127,8 @@ function updatePhaseUI() {
       DOM.timerRingContainer.classList.add("break");
     } else if (AppState.phase === "long-break") {
       DOM.timerRingContainer.classList.add("long-break");
+    } else if (AppState.phase === "stopwatch") {
+      DOM.timerRingContainer.classList.add("stopwatch");
     } else if (AppState.status === "running") {
       DOM.timerRingContainer.classList.add("focus");
     }
@@ -172,6 +195,12 @@ function handleModeSwitch(mode) {
 
   pauseTimer();
   switchPhase(mode);
+  
+  // 正向计时模式：重置已计时时间
+  if (isStopwatchMode()) {
+    AppState.timeElapsed = 0;
+  }
+  
   AppState.status = "ready";
   updatePhaseUI();
   updateDisplay();
@@ -184,7 +213,7 @@ function handleModeSwitch(mode) {
 function updateStatusUI() {
   const statusTexts = {
     ready: "准备就绪",
-    running: AppState.phase === "focus" ? "专注中" : "休息中",
+    running: AppState.phase === "focus" ? "专注中" : (AppState.phase === "stopwatch" ? "计时中" : "休息中"),
     paused: "已暂停",
   };
 

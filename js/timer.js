@@ -12,12 +12,19 @@ function startTimer() {
   updateStatusUI();
 
   AppState.timerInterval = setInterval(() => {
-    AppState.timeRemaining--;
-
-    if (AppState.timeRemaining <= 0) {
-      timerComplete();
-    } else {
+    if (isStopwatchMode()) {
+      // 正向计时模式：时间递增
+      AppState.timeElapsed++;
       updateDisplay();
+    } else {
+      // 倒计时模式：时间递减
+      AppState.timeRemaining--;
+
+      if (AppState.timeRemaining <= 0) {
+        timerComplete();
+      } else {
+        updateDisplay();
+      }
     }
   }, 1000);
 }
@@ -40,7 +47,14 @@ function pauseTimer() {
 function resetTimer() {
   pauseTimer();
   AppState.status = "ready";
-  setPhaseTime();
+  
+  if (isStopwatchMode()) {
+    // 正向计时模式：重置已计时时间为0
+    AppState.timeElapsed = 0;
+  } else {
+    setPhaseTime();
+  }
+  
   updateDisplay();
   updateStatusUI();
 }
@@ -103,6 +117,12 @@ function timerComplete() {
  * 跳过当前阶段
  */
 function skipPhase() {
+  // 正向计时模式下，跳过等同于重置
+  if (isStopwatchMode()) {
+    resetTimer();
+    return;
+  }
+
   // 如果在专注中跳过，不计入完成
   if (AppState.phase === "focus" && AppState.status === "running") {
     AppState.pomodorosInSet = 0;

@@ -4,10 +4,11 @@
 
 const AppState = {
   // 计时器状态
-  phase: "focus", // 'focus' | 'break' | 'long-break'
+  phase: "focus", // 'focus' | 'break' | 'long-break' | 'stopwatch'
   status: "ready", // 'ready' | 'running' | 'paused'
-  timeRemaining: 25 * 60, // 秒
+  timeRemaining: 25 * 60, // 秒（倒计时模式）
   totalTime: 25 * 60,
+  timeElapsed: 0, // 秒（正向计时模式已计时时间）
 
   // 番茄计数
   pomodorosCompleted: 0,
@@ -34,6 +35,13 @@ const AppState = {
 };
 
 /**
+ * 判断是否为正向计时模式
+ */
+function isStopwatchMode() {
+  return AppState.phase === "stopwatch";
+}
+
+/**
  * 获取当前的阶段标签文本
  */
 function getPhaseLabel() {
@@ -41,6 +49,7 @@ function getPhaseLabel() {
     focus: "专注",
     break: "短休息",
     "long-break": "长休息",
+    stopwatch: "正向计时",
   };
   return phaseLabels[AppState.phase];
 }
@@ -51,7 +60,7 @@ function getPhaseLabel() {
 function getStatusText() {
   const statusTexts = {
     ready: "准备就绪",
-    running: AppState.phase === "focus" ? "专注中" : "休息中",
+    running: AppState.phase === "focus" ? "专注中" : (AppState.phase === "stopwatch" ? "计时中" : "休息中"),
     paused: "已暂停",
   };
   return statusTexts[AppState.status];
@@ -65,6 +74,7 @@ function getPhaseTime() {
     focus: AppState.settings.focusTime * 60,
     break: AppState.settings.shortBreak * 60,
     "long-break": AppState.settings.longBreak * 60,
+    stopwatch: 0, // 正向计时模式不需要预设时间
   };
   return times[AppState.phase];
 }
@@ -73,8 +83,15 @@ function getPhaseTime() {
  * 设置当前阶段的时间
  */
 function setPhaseTime() {
-  AppState.totalTime = getPhaseTime();
-  AppState.timeRemaining = AppState.totalTime;
+  if (isStopwatchMode()) {
+    // 正向计时模式：使用已计时时间
+    AppState.totalTime = 0;
+    AppState.timeRemaining = 0;
+    // timeElapsed 保持不变或重置为0（根据状态）
+  } else {
+    AppState.totalTime = getPhaseTime();
+    AppState.timeRemaining = AppState.totalTime;
+  }
 }
 
 /**
@@ -124,6 +141,7 @@ function setTheme(theme) {
 
 // 导出模块
 window.AppState = AppState;
+window.isStopwatchMode = isStopwatchMode;
 window.getPhaseLabel = getPhaseLabel;
 window.getStatusText = getStatusText;
 window.getPhaseTime = getPhaseTime;
