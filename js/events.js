@@ -28,6 +28,42 @@ function initEventListeners() {
     DOM.themeToggleBtn.addEventListener("click", handleThemeToggle);
   }
 
+  // 后台节流补偿：页面重新可见时，用时间戳重新校正计时器
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible" && AppState.status === "running") {
+      // 计时器仍在运行，但 setInterval 可能被浏览器节流了
+      // 重启计时器：先暂停（保留当前 timeRemaining/timeElapsed），再立即恢复
+      // startTimer 会重新记录 _startTimestamp，从当前值继续精确计时
+      if (AppState.timerInterval) {
+        clearInterval(AppState.timerInterval);
+        AppState.timerInterval = null;
+      }
+      // 重置时间戳基准，以当前 timeRemaining/timeElapsed 为起点重新开始
+      AppState._startTimestamp = Date.now();
+      if (isStopwatchMode()) {
+        AppState._startTimeElapsed = AppState.timeElapsed;
+      } else {
+        AppState._startTimeRemaining = AppState.timeRemaining;
+      }
+      AppState.timerInterval = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - AppState._startTimestamp) / 1000);
+        if (isStopwatchMode()) {
+          AppState.timeElapsed = AppState._startTimeElapsed + elapsed;
+          updateDisplay();
+        } else {
+          const remaining = AppState._startTimeRemaining - elapsed;
+          if (remaining <= 0) {
+            AppState.timeRemaining = 0;
+            timerComplete();
+          } else {
+            AppState.timeRemaining = remaining;
+            updateDisplay();
+          }
+        }
+      }, 500);
+    }
+  });
+
   // 全屏切换
   DOM.fullscreenToggle.addEventListener("click", toggleFullscreen);
 

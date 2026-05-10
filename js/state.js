@@ -32,6 +32,11 @@ const AppState = {
 
   // 计时器引用
   timerInterval: null,
+
+  // 精确计时用的时间戳（用于漂移修正）
+  _startTimestamp: null,      // 本次 start 时的 Date.now()
+  _startTimeRemaining: null,  // 本次 start 时的剩余秒数（倒计时模式）
+  _startTimeElapsed: null,    // 本次 start 时的已计时秒数（秒表模式）
 };
 
 /**

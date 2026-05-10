@@ -4,29 +4,43 @@
 
 /**
  * 启动计时器
+ * 使用 Date.now() 时间戳修正 setInterval 漂移，
+ * 同时支持页面后台节流后的时间补偿。
  */
 function startTimer() {
   if (AppState.timerInterval) return;
 
   AppState.status = "running";
+
+  // 记录本次启动时的基准时间戳和基准计时值
+  AppState._startTimestamp = Date.now();
+  if (isStopwatchMode()) {
+    AppState._startTimeElapsed = AppState.timeElapsed;
+  } else {
+    AppState._startTimeRemaining = AppState.timeRemaining;
+  }
+
   updateStatusUI();
 
   AppState.timerInterval = setInterval(() => {
+    // 用实际经过的毫秒数计算，消除 setInterval 漂移
+    const elapsed = Math.floor((Date.now() - AppState._startTimestamp) / 1000);
+
     if (isStopwatchMode()) {
-      // 正向计时模式：时间递增
-      AppState.timeElapsed++;
+      AppState.timeElapsed = AppState._startTimeElapsed + elapsed;
       updateDisplay();
     } else {
-      // 倒计时模式：时间递减
-      AppState.timeRemaining--;
+      const remaining = AppState._startTimeRemaining - elapsed;
 
-      if (AppState.timeRemaining <= 0) {
+      if (remaining <= 0) {
+        AppState.timeRemaining = 0;
         timerComplete();
       } else {
+        AppState.timeRemaining = remaining;
         updateDisplay();
       }
     }
-  }, 1000);
+  }, 500); // 500ms 轮询，保证秒级精度的同时减少漂移
 }
 
 /**
@@ -37,6 +51,11 @@ function pauseTimer() {
     clearInterval(AppState.timerInterval);
     AppState.timerInterval = null;
   }
+  // 清除时间戳基准，下次 startTimer 会重新记录
+  AppState._startTimestamp = null;
+  AppState._startTimeRemaining = null;
+  AppState._startTimeElapsed = null;
+
   AppState.status = "paused";
   updateStatusUI();
 }
@@ -123,9 +142,21 @@ function skipPhase() {
     return;
   }
 
-  // 如果在专注中跳过，不计入完成
+  // 如果在专注中跳过，不计入完成，但要先判断是否触发长休息再重置
   if (AppState.phase === "focus" && AppState.status === "running") {
+    // 注意：先判断 pomodorosInSet，再重置，否则长休息永远触发不了
+    const shouldLongBreak = AppState.pomodorosInSet >= 4;
     AppState.pomodorosInSet = 0;
+
+    pauseTimer();
+
+    switchPhase(shouldLongBreak ? "long-break" : "break");
+    AppState.status = "ready";
+    updatePhaseUI();
+    updateDisplay();
+    updateStatusUI();
+    updatePomodoroDots();
+    return;
   }
 
   pauseTimer();
